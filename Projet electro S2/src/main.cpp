@@ -2,7 +2,7 @@
 
 void setup() {
   // put your setup code here, to run once:
-  //Bonjour
+  //sur ce, dodo
 }
 
 void loop() {
