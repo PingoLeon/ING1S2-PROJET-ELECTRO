@@ -22,6 +22,5 @@
 * Diagramme synoptique des différents modules numériques et analogiques :
 
   ![1680008739478](image/README/1680008739478.png)
-
-
-* ***Forme finale supposée du circuit :***![1680006619814](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/dalle/Documents/01%20-%20ECE%20-%20Ann%C3%A9e%201/02.1%20-%20Electronique/02%20-%20PROJET%20ELECTRO%20S2/image/README/1680006619814.png)
+* ***Forme finale supposée du circuit :***
+* ![1680006619814](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/dalle/Documents/01%20-%20ECE%20-%20Ann%C3%A9e%201/02.1%20-%20Electronique/02%20-%20PROJET%20ELECTRO%20S2/image/README/1680006619814.png)
