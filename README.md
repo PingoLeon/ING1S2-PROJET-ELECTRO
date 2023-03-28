@@ -1,12 +1,24 @@
 ## Projet d'Electronique du 2nd semestre ECE ING1
 
-Objectif : Reproduire un Synthé sur Arduino avec une interface graphique sur Ordinateur
+***Objectif :** *Reproduire un Synthé sur Arduino avec une interface graphique Processing
 
-Organisation : Fichiers du Projet sur GitHub + Rapport de Projet sur Google Docs
+***Rendu :*** Rapport détaillé et professionnel et Projet Arduino 
 
-Rapport + Présentation ---> https://drive.google.com/drive/folders/18Ejd3RK-yX-xevtI5TjwW3On4UCgQXpG?usp=share_link
+---
+
+***Organisation :***
+
+Fichiers du Projet sur GitHub +
+
+Rapport + Présentation ---> [Dossier Google Drive]([https://drive.google.com/drive/folders/18Ejd3RK-yX-xevtI5TjwW3On4UCgQXpG?usp=share_link]() "clique !")
+
+---
+
+
 
 **1 - Conception du circuit**
+
+
 
 Circuit sous forme :
 
