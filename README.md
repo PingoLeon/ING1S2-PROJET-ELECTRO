@@ -7,3 +7,7 @@ Organisation : Fichiers du Projet sur GitHub + Rapport de Projet sur Google Docs
 Rapport + Présentation ---> https://drive.google.com/drive/folders/18Ejd3RK-yX-xevtI5TjwW3On4UCgQXpG?usp=share_link
 
 **1 - Conception du circuit**
+
+Circuit sous forme :
+
+![1680006619814](image/README/1680006619814.png)
