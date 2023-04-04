@@ -1,13 +1,10 @@
 #include <Arduino.h>
 //get analogic signal from pin AO
-//send it to buzzer on pin 3
-
 int pinAO = A0;
 int value = 0;
 void setup() {
   Serial.begin(9600);
   pinMode(3, OUTPUT);
-
 }
 
 void loop() {
