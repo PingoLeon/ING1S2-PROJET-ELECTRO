@@ -13,5 +13,8 @@ void loop() {
   // put your main code here, to run repeatedly:
   int value = analogRead(pinAO);
   Serial.println(value);
+  if (value  != 0){
+    tone(3, value);
+  }
   delay(100);
 }
