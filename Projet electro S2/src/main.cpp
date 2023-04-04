@@ -3,13 +3,18 @@
 //send it to buzzer on pin 3
 
 int pinAO = A0;
+int value = 0;
 void setup() {
   Serial.begin(9600);
+  pinMode(3, OUTPUT);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int value = analogRead(pinAO);
+  while (value == 0){
+    analogRead(pinAO);
+  }
   Serial.println(value);
   delay(100);
 }
