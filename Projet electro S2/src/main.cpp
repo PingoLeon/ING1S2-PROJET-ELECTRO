@@ -1,26 +1,29 @@
 #include <Arduino.h>
-//get analogic signal from pin AO
-int pinAO = A0;
-int value = 0;
-int pin = 9;
-unsigned long duration;
+const int inputPin = 2; // Entrée du signal de fréquence
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(pin, INPUT);
+  Serial.begin(9600); // Initialisation de la communication série
 }
 
 void loop() {
-  //mesure the duration of the pulse
-  duration = pulseIn(pin, HIGH);
-
-  //make an average of 10 values of the duration of the pulse
+  float freqSum = 0;
+  int count = 0;
   for (int i = 0; i < 10; i++) {
-    duration += pulseIn(pin, HIGH);
+    int pulseWidth = pulseIn(inputPin, HIGH, 1000000); // Mesure de la largeur d'impulsion du signal
+    float frequency = 1000000.0 / pulseWidth; // Calcul de la fréquence en Hz
+    if (frequency != INFINITY) { // Vérification que la fréquence mesurée n'est pas "inf"
+      freqSum += frequency;
+      count++;
+    }
+    delay(10); // Attente entre chaque mesure
   }
-  duration = duration / 10;
-
-  Serial.println(duration);
-  duration = 0;
-  delay(100);
+  if (count > 0) {
+    float averageFreq = freqSum / count;
+    Serial.print("Fréquence moyenne : ");
+    Serial.print(averageFreq);
+    Serial.println(" Hz");
+  }
 }
+
+
+
