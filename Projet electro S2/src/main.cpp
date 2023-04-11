@@ -24,7 +24,16 @@ void loop() {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
-  Serial.print(distance);
-  Serial.println(" cm");
+  if (distance == 1191){
+    distance = 0;
+
+  }
+
+  if (distance >= 5 && distance <= 25){
+    Serial.print(distance);
+    Serial.println(" cm");
+  }else{
+    Serial.println("Out of range");
+  }
   delay(100);
 }

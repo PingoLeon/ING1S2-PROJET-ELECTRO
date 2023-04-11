@@ -73,22 +73,6 @@ void loop() {
     //send the frequency to the test tone
     toneif(averageFreq);
   }
-
-  //Mesure à l'aide du capteur à ultrason
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH);
-  distance = duration * 0.034 / 2;
-  if (distance == 1191){
-    distance = 0;
-  }
-  Serial.print(distance);
-  Serial.println(" cm");
-
-
   delay(8);
 }
 
