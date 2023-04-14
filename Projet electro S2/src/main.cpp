@@ -63,7 +63,7 @@ void loop() {
   float freqSum = 0;
   int count = 0;
   for (int i = 0; i < 10; i++) {
-    int pulseWidth = pulseIn(inputPin, HIGH, 1000000); // Mesure de la largeur d'impulsion du signal
+    int pulseWidth = pulseIn(inputPin, HIGH, 100); // Mesure de la largeur d'impulsion du signal
     float frequency = 1000000.0 / pulseWidth; // Calcul de la fréquence en Hz
     if (frequency != INFINITY) { 
       // Vérification que la fréquence mesurée n'est pas "inf"
@@ -93,13 +93,13 @@ void loop() {
   int pot2 = analogRead(PotPin2);
   
   // Conversion de la valeur de pot1 en intervalle entre les tics
-  ticInterval = map(pot1, 0, 1023, 1500, 60) + 10;
+  ticInterval = map(pot1, 0, 1023, 1500, 60) ;
   
   // Conversion de la valeur de pot2 en fréquence du son
   int frequency = map(pot2, 0, 1023, 20, 20000);
 
   // Production du son avec la fréquence et la durée déterminées par les potentiomètres
-  if (millis() - lastTicTime >= ticInterval) {
+  if (millis() - lastTicTime >= ticInterval - 200) {
     tone(BuzzerPin, frequency);
     delay(5); // Durée du tic sonore
     noTone(BuzzerPin);
