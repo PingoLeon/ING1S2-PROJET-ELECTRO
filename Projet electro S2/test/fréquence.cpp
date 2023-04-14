@@ -38,8 +38,8 @@ void setup() {
   pinMode(inputPin, INPUT); // Initialisation de la broche d'entrée du signal de fréquence
 
   //initialisation du capteur à ultrason
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
+  pinMode(TriggerPin, OUTPUT);
+  pinMode(EchoPin, INPUT);
 }
 
 void loop() {
