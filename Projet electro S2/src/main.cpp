@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <toneAC.h>
 
-//!##################################################  DECLARATION DES PINS ET VARIABLES GLOBALES ##################################################
+//!##################################################  DECLARATION DES PINS ##################################################
 //oled screen
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
