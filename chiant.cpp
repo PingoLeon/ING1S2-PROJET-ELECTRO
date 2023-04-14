@@ -4,9 +4,9 @@
 const int inputPin = 12; // Entrée du signal de fréquence lue
 const int BuzzerPin = 2; // Entrée du signal de fréquence envoyée
 
-//exemple de code avec un capteur à ultrason HC-SR04
-const int trigPin = 11;
-const int echoPin = 10;
+//ultrason
+const int TriggerPin = 11;
+const int EchoPin = 12;
 long duration;
 int distance;
 
