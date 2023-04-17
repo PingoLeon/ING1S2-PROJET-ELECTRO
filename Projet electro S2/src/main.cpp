@@ -1,10 +1,9 @@
 #include <Adafruit_SSD1306.h>
 #include <Arduino.h>
 #include <toneAC.h>
-#
+
 
 //!##################################################  DECLARATION DES PINS ET VARIABLES GLOBALES ##################################################
-
 //oled screen
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
@@ -43,46 +42,28 @@ unsigned long lastTicTime = 0; // Temps depuis le dernier tic
 void toneif(float freq, int ultrason){
   if(freq <= 700){
       freq = 261.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 800 && freq > 700){
       freq = 293.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 800 && freq > 700){
       freq = 329.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 900 && freq > 800){
       freq = 349.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 1015 && freq > 900){
       freq = 392.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 1120 && freq > 1015){
       freq = 440.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
   else if(freq <= 1300 && freq > 1120){
       freq = 493.0;
-      tone(BuzzerPin, freq + ultrason);
-      Serial.write((byte*)&freq, sizeof(float));
-      Serial.write((byte*)&ultrason, sizeof(int));
   }
+  tone(BuzzerPin, freq + ultrason);
+  Serial.write((byte*)&freq, sizeof(float));
+  Serial.write((byte*)&ultrason, sizeof(int));
 }
 
 //?##################################################  SETUP  ##################################################
