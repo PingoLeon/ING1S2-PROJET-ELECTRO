@@ -1,8 +1,10 @@
 #include <Adafruit_SSD1306.h>
 #include <Arduino.h>
 #include <toneAC.h>
+#
 
 //!##################################################  DECLARATION DES PINS ET VARIABLES GLOBALES ##################################################
+
 //oled screen
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
@@ -13,6 +15,7 @@ const int BuzzerPin = 2;
 //bouton
 const int ButtonPin = 4;
 bool buttonState = false;
+bool block;
 
 //VCO
 const int inputPin = 5; // Entrée du signal de fréquence lue
@@ -24,7 +27,11 @@ const int EchoPin = 12;
 long duration;
 int distance;
 
-//Metronome : 
+//paramètres du capteur à ultrason
+const int minSensor = 5;
+const int pas = 5;
+
+//Metronome 
 const int PotPin1 = A1;
 const int PotPin2 = A0;
 unsigned long ticInterval; // Intervalle en millisecondes entre les tics
@@ -33,58 +40,50 @@ unsigned long lastTicTime = 0; // Temps depuis le dernier tic
 
 //!############################################################################################################################
 
-void toneif(float freq){
+void toneif(float freq, int ultrason){
   if(freq <= 700){
-      tone(BuzzerPin, 261.63);
-      Serial.println("1");
-  }else if(freq <= 800 && freq > 700){
-      tone(BuzzerPin, 293.66);
-      Serial.println("2");
-  }else if(freq <= 800 && freq > 700){
-      tone(BuzzerPin, 329.63);
-      Serial.println("3");
-  }else if(freq <= 900 && freq > 800){
-      tone(BuzzerPin, 349.23);
-      Serial.println("4");
-  }else if(freq <= 1015 && freq > 900){
-      tone(BuzzerPin, 392.00);
-      Serial.println("5");
-  }else if(freq <= 1120 && freq > 1015){
-      tone(BuzzerPin, 440.00);
-      Serial.println("6");
-  }else if(freq <= 1300 && freq > 1120){
-      tone(BuzzerPin, 493.88);
-      Serial.println("7");
+      freq = 261.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 800 && freq > 700){
+      freq = 293.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 800 && freq > 700){
+      freq = 329.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 900 && freq > 800){
+      freq = 349.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 1015 && freq > 900){
+      freq = 392.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 1120 && freq > 1015){
+      freq = 440.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
+  }
+  else if(freq <= 1300 && freq > 1120){
+      freq = 493.0;
+      tone(BuzzerPin, freq + ultrason);
+      Serial.write((byte*)&freq, sizeof(float));
+      Serial.write((byte*)&ultrason, sizeof(int));
   }
 }
-
-
-/*
-void toneif(float freq){
-  if(freq <= 650){
-      toneAC(261.63);
-      Serial.println("1");
-  }else if(freq <= 750 && freq > 650){
-      toneAC(293.66);
-      Serial.println("2");
-  }else if(freq <= 850 && freq > 750){
-      toneAC(329.63);
-      Serial.println("3");
-  }else if(freq <= 950 && freq > 850){
-      toneAC(349.23);
-      Serial.println("4");
-  }else if(freq <= 1050 && freq > 950){
-      toneAC(392.00);
-      Serial.println("5");
-  }else if(freq <= 1150 && freq > 1050){  
-      toneAC(440.00);
-      Serial.println("6");
-  }else if(freq <= 3000 && freq > 1150){
-      toneAC(493.88);
-      Serial.println("7");
-  }
-}
-*/
 
 //?##################################################  SETUP  ##################################################
 void setup() {
@@ -108,13 +107,33 @@ void setup() {
   display.setCursor(0,0);
   display.setTextColor(SSD1306_WHITE);
 }
-//?############################################################################################################
 
 
 //*##################################################  LOOP  ##################################################
 void loop() {
+
+  //?##################################  Bouton  ##################################
+  //block all the program while the button hasn't been pressed another time
+  if (digitalRead(ButtonPin) == HIGH && buttonState == false) {
+    buttonState = true;
+    block = true;
+  }
+  while(block) {
+    if(digitalRead(ButtonPin) == HIGH && buttonState == true) {
+      buttonState = false;
+      block = false;
+    }
+
+    //display a message on the screen
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.println("Le système est bloqué");
+    display.println("Appuyez sur le bouton");
+    display.println("pour le débloquer");
+    display.display(); 
+  }
+    
   //!################################## Mesure de la fréquence du VCO et envoi sur le moniteur série
-  //moyenne de 10 fréquences pour le VCO
   float freqSum = 0;
   int count = 0;
   for (int i = 0; i < 1; i++) {
@@ -134,12 +153,31 @@ void loop() {
   if (count > 0) {
     // Calcul de la fréquence moyenne et affichage sur le moniteur série
     float averageFreq = freqSum / count;
-    Serial.print("Fréquence moyenne : ");
-    Serial.print(averageFreq);
-    Serial.println(" Hz");
+
+    //mesure de l'ultrason
+    digitalWrite(TriggerPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TriggerPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TriggerPin, LOW);
+    duration = pulseIn(EchoPin, HIGH);
+    distance = duration * 0.034 / 2;
+    
+    //comparer cette distance : 
+    if(distance == 1191){
+      distance = 0;
+    }else if(distance >= minSensor && distance < (minSensor + pas)){
+      distance = 20;
+    }else if(distance >= (minSensor + pas) && distance < (minSensor + 2*pas)){
+      distance = 40;
+    }else if(distance >= (minSensor + 2*pas) && distance < (minSensor + 3*pas)){
+      distance = 60;
+    }else if(distance >= (minSensor + 3*pas) && distance <= (minSensor + 4*pas)){
+      distance = 80;
+    }
 
     //send the frequency to the buzzer
-    toneif(averageFreq);
+    toneif(averageFreq, distance);
   }
   //!############################################################
 
@@ -169,5 +207,3 @@ void loop() {
   display.print(map(pot1, 0, 1023, 1, 200));
   display.display();
 }
-
-
