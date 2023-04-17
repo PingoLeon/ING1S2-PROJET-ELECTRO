@@ -113,11 +113,13 @@ void setup() {
 void loop() {
 
   //?##################################  Bouton  ##################################
+  
   //block all the program while the button hasn't been pressed another time
   if (digitalRead(ButtonPin) == HIGH && buttonState == false) {
     buttonState = true;
     block = true;
   }
+  
   while(block) {
     if(digitalRead(ButtonPin) == HIGH && buttonState == true) {
       buttonState = false;
@@ -136,20 +138,24 @@ void loop() {
   //!################################## Mesure de la fréquence du VCO et envoi sur le moniteur série
   float freqSum = 0;
   int count = 0;
+  
   for (int i = 0; i < 1; i++) {
     int pulseWidth;
     float frequency = 0;
         pulseWidth = pulseIn(inputPin, HIGH, 4000); // Durée de mesure plus longue pour les fréquences basses
     frequency = 1000000.0 / pulseWidth; // Calcul de la fréquence en Hz
+    
     if (frequency != INFINITY) { 
       // Vérification que la fréquence mesurée n'est pas "inf"
       freqSum += frequency;
       count++;
-    }else{
+    }
+    else {
       //Si la fréquence est infinie, on coupe le buzzer car c'est une valeur inexploitable
       noTone(BuzzerPin);
     }
   }
+
   if (count > 0) {
     // Calcul de la fréquence moyenne et affichage sur le moniteur série
     float averageFreq = freqSum / count;
@@ -179,8 +185,6 @@ void loop() {
     //send the frequency to the buzzer
     toneif(averageFreq, distance);
   }
-  //!############################################################
-
 
   //!####################################  Metronome
   // Lecture de la valeur des potentiomètres
