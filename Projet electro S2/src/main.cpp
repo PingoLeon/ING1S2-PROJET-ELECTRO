@@ -62,8 +62,9 @@ void toneif(float freq, int ultrason){
       freq = 493.0;
   }
   tone(BuzzerPin, freq + ultrason);
-  Serial.write((byte*)&freq, sizeof(float));
-  Serial.write((byte*)&ultrason, sizeof(int));
+  Serial.print(ultrason);
+  Serial.print(',');
+  Serial.println(freq);
 }
 
 //?##################################################  SETUP  ##################################################
