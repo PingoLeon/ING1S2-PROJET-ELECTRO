@@ -42,37 +42,28 @@ unsigned long lastTicTime = 0; // Temps depuis le dernier tic
 
 
 void toneif(float freq, int ultrason){
-  int listFreq[] = {300, 400, 600, 700, 800, 900, 1100, 1500};
-  int numTouche = 0;
+  int listFreq[] = {200,600, 700, 800, 900, 1000, 1100, 1500};
   if(freq <= listFreq[1] && freq >= listFreq[0]){
     freq =  262;
-    numTouche = 1;
   }else if(freq <= listFreq[2] && freq >= listFreq[1]){
     freq =  294;
-    numTouche = 2;
   }else if(freq <= listFreq[3] && freq >= listFreq[2]){
     freq =  330;
-    numTouche = 3;
   }else if(freq <= listFreq[4] && freq >= listFreq[3]){
     freq =  349;
-    numTouche = 4;
   }else if(freq <= listFreq[5] && freq >= listFreq[4]){
     freq =  392;
-    numTouche = 5;
   }else if(freq <= listFreq[6] && freq >= listFreq[5]){
     freq =  440;
-    numTouche = 6;
   }else if(freq <= listFreq[7] && freq >= listFreq[6]){
     freq =  494;
-    numTouche = 7;
   }
 
 
   tone(BuzzerPin, freq + ultrason);
-  Serial.print(numTouche);
+  Serial.print(ultrason);
   Serial.print(',');
-  Serial.println(freq + ultrason);
-  numTouche = 0;
+  Serial.println(freq);
 }
 
 //?##################################################  SETUP  ##################################################
