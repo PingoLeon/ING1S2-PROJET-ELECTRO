@@ -8,6 +8,7 @@
 #define OLED_RESET -1
 Adafruit_SSD1306 display(OLED_RESET);
 
+
 //buzzer
 const int BuzzerPin = 2;
 
